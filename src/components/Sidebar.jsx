@@ -8,28 +8,18 @@ export default function Sidebar() {
   const filter = useSelector((state) => state.products.filter);
 
   const categories = [...new Set(products.map((p) => p.category))];
-  const brands = [...new Set(products.map((p) => p.brand))];
 
   const prices = products.map((p) => p.price);
   const minPrice = Math.min(...prices);
   const maxPrice = Math.max(...prices);
 
-  const [selectedCategories, setSelectedCategories] = useState(filter.category);
-  const [selectedBrands, setSelectedBrands] = useState(filter.brand);
+  const [selectedCategory, setSelectedCategory] = useState(
+    filter.category[0] || ""
+  );
   const [priceRange, setPriceRange] = useState(filter.priceRange);
 
   const handleCategoryChange = (category) => {
-    const updated = selectedCategories.includes(category)
-      ? selectedCategories.filter((c) => c !== category)
-      : [...selectedCategories, category];
-    setSelectedCategories(updated);
-  };
-
-  const handleBrandChange = (brand) => {
-    const updated = selectedBrands.includes(brand)
-      ? selectedBrands.filter((b) => b !== brand)
-      : [...selectedBrands, brand];
-    setSelectedBrands(updated);
+    setSelectedCategory(category);
   };
 
   const handlePriceChange = (e) => {
@@ -39,80 +29,67 @@ export default function Sidebar() {
   useEffect(() => {
     dispatch(
       setFilter({
-        category: selectedCategories,
-        brand: selectedBrands,
+        category: selectedCategory ? [selectedCategory] : [],
         priceRange: priceRange,
       })
     );
-  }, [selectedCategories, selectedBrands, priceRange, dispatch]);
+  }, [selectedCategory, priceRange, dispatch]);
 
   return (
-    <aside className="p-4 border-r border-gray-700 w-1/7 hidden sm:block min-w-[155px] text-white">
-      <h3 className="font-semibold mb-4">Filters</h3>
+    <aside className="p-4 border-r w-1/5 hidden sm:block min-w-[155px] text-white">
+      <div className="bg-[#0858a8] rounded-2xl p-4">
+        <h3 className="font-semibold mb-4 text-2xl">Filters</h3>
 
-      <div className="mb-4">
-        <h4 className="font-medium mb-2">Category</h4>
-        {categories.map((category) => (
-          <div key={category}>
-            <input
-              type="checkbox"
-              id={`category ${category}`}
-              checked={selectedCategories.includes(category)}
-              onChange={() => handleCategoryChange(category)}
-            />
-            <label
-              className="ml-1 cursor-pointer"
-              htmlFor={`category ${category}`}
-            >
-              {category}
-            </label>
+        <div className="mb-4">
+          <h4 className="font-medium mb-2 text-xl">Category</h4>
+          {categories.map((category) => (
+            <div key={category}>
+              <input
+                type="radio"
+                name="category"
+                id={`category-${category}`}
+                checked={selectedCategory === category}
+                onChange={() => handleCategoryChange(category)}
+                className="custom-radio appearance-none w-5 h-5 rounded-full border-2 checked:border-4 border-white cursor-pointer"
+              />
+              <label
+                className="ml-1 cursor-pointer"
+                htmlFor={`category-${category}`}
+              >
+                {category}
+              </label>
+            </div>
+          ))}
+        </div>
+
+        <div className="mb-4">
+          <h4 className="font-medium mb-2">Price</h4>
+          <input
+            type="range"
+            className="accent-white w-full"
+            min={minPrice}
+            max={maxPrice}
+            value={priceRange[1]}
+            onChange={handlePriceChange}
+          />
+          <div className="text-sm mb-1 flex justify-between">
+            <span>{priceRange[0]}</span>
+            <span>{priceRange[1]}</span>
           </div>
-        ))}
-      </div>
+        </div>
 
-      <div className="mb-4">
-        <h4 className="font-medium mb-2">Brand</h4>
-        {brands.map((brand) => (
-          <div key={brand}>
-            <input
-              type="checkbox"
-              id={`brand ${brand}`}
-              checked={selectedBrands.includes(brand)}
-              onChange={() => handleBrandChange(brand)}
-            />
-            <label className="ml-1 cursor-pointer" htmlFor={`brand ${brand}`}>
-              {brand}
-            </label>
-          </div>
-        ))}
+        {/* Clear Filters */}
+        <button
+          className="mt-4 px-2 py-1 bg-white text-[#0858a8] rounded cursor-pointer"
+          onClick={() => {
+            setSelectedCategory("");
+            setPriceRange([minPrice, maxPrice]);
+            dispatch(clearFilter());
+          }}
+        >
+          Clear Filters
+        </button>
       </div>
-
-      <div className="mb-4">
-        <h4 className="font-medium mb-2">Price</h4>
-        <p className="text-sm mb-1">
-          {priceRange[0]} - {priceRange[1]}
-        </p>
-        <input
-          type="range"
-          className="accent-[#f00f18] w-full"
-          min={minPrice}
-          max={maxPrice}
-          value={priceRange[1]}
-          onChange={handlePriceChange}
-        />
-      </div>
-
-      <button
-        className="mt-4 px-2 py-1 bg-[#f00f18] rounded"
-        onClick={() => {
-          setSelectedCategories([]);
-          setSelectedBrands([]);
-          setPriceRange([minPrice, maxPrice]);
-          dispatch(clearFilter());
-        }}
-      >
-        Clear Filters
-      </button>
     </aside>
   );
 }

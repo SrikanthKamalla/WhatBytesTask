@@ -15,7 +15,6 @@ const items = [
     image: asianshoes,
     rating: 4.2,
     category: "Footwear",
-    brand: "Asian",
     description:
       "Lightweight and comfortable running shoes designed for everyday wear and fitness activities.",
   },
@@ -27,7 +26,6 @@ const items = [
     image: asuslaptop,
     rating: 4.5,
     category: "Laptops",
-    brand: "Asus",
     description:
       "Asus Vivobook with Intel i5 processor, 8GB RAM, and 512GB SSD. Perfect for work, study, and entertainment.",
   },
@@ -39,7 +37,6 @@ const items = [
     image: batashoes,
     rating: 4,
     category: "Footwear",
-    brand: "Bata",
     description:
       "Classic Bata formal shoes with premium leather finish. Ideal for office wear and formal occasions.",
   },
@@ -51,7 +48,6 @@ const items = [
     image: realmebuds,
     rating: 4.3,
     category: "Accessories",
-    brand: "Realme",
     description:
       "Realme Buds 2 with powerful bass, tangle-free cable, and built-in mic for calls and music control.",
   },
@@ -63,7 +59,6 @@ const items = [
     image: vivox200,
     rating: 4.4,
     category: "Smartphones",
-    brand: "Vivo",
     description:
       "Vivo X200 FE with AMOLED display, 5G support, Snapdragon processor, and advanced camera system.",
   },
@@ -75,7 +70,6 @@ const items = [
     qty: 1,
     rating: 4.1,
     category: "Smartphones",
-    brand: "Redmi",
     description:
       "Redmi Note 9 Pro Max with 6.67-inch display, quad-camera setup, and 5020mAh battery for long-lasting performance.",
   },
@@ -89,7 +83,6 @@ const initialState = {
   products: items,
   filter: {
     category: [],
-    brand: [],
     priceRange: [minPrice, maxPrice],
     search: "",
   },
@@ -108,7 +101,6 @@ const productSlice = createSlice({
       const maxPrice = Math.max(...prices);
       state.filter = {
         category: [],
-        brand: [],
         priceRange: [minPrice, maxPrice],
         search: "",
       };
@@ -124,9 +116,6 @@ export const selectFilteredProducts = createSelector(
       const matchesCategory =
         filter.category.length === 0 || filter.category.includes(p.category);
 
-      const matchesBrand =
-        filter.brand.length === 0 || filter.brand.includes(p.brand);
-
       const matchesPrice =
         p.price >= filter.priceRange[0] && p.price <= filter.priceRange[1];
 
@@ -134,7 +123,7 @@ export const selectFilteredProducts = createSelector(
         .toLowerCase()
         .includes(filter.search.toLowerCase());
 
-      return matchesCategory && matchesBrand && matchesPrice && matchesSearch;
+      return matchesCategory && matchesPrice && matchesSearch;
     })
 );
 

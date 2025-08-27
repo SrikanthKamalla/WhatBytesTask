@@ -32,7 +32,7 @@ export default function ProductCard({ product }) {
 
   return (
     <div
-      className="w-full max-w-[400px] mx-auto rounded-lg shadow hover:shadow-lg transition p-4 min-h-[500px] mt-4 bg-[#1e1e1e] text-white flex flex-col justify-between cursor-pointer"
+      className="w-full max-w-[400px] mx-auto rounded-lg shadow hover:shadow-lg transition p-4 min-h-[500px] mt-4 bg flex flex-col justify-between cursor-pointer"
       onClick={() => navigate(`/product/${product.id}`)}
     >
       <div className="min-h-80 bg-white object-cover rounded flex justify-center items-center p-4">
@@ -48,21 +48,21 @@ export default function ProductCard({ product }) {
         <p className="text-sm mt-1 line-clamp-2">{product.description}</p>
         <div className="mt-2 flex items-center justify-between">
           <p className="text-lg font-bold">${product.price}</p>
-          <p className="text-yellow-400 font-semibold">{product.rating} ★</p>
+          <p className="text-[#0858a8] font-semibold">{product.rating} ★</p>
         </div>
 
         {cartItem ? (
           <div className="flex items-center gap-2 mt-4">
             <button
               onClick={handleDecrease}
-              className="px-3 py-2 bg-gray-600 rounded-lg text-white font-semibold cursor-pointer"
+              className="px-3 py-2 rounded-lg bg-[#0858a8] text-white font-semibold cursor-pointer"
             >
-              –
+              -
             </button>
-            <span className="text-white font-semibold">{cartItem.qty}</span>
+            <span className=" font-semibold">{cartItem.qty}</span>
             <button
               onClick={handleIncrease}
-              className="px-3 py-2 bg-gray-600 rounded-lg text-white font-semibold cursor-pointer"
+              className="px-3 py-2 rounded-lg bg-[#0858a8] text-white font-semibold cursor-pointer"
             >
               +
             </button>
@@ -70,7 +70,7 @@ export default function ProductCard({ product }) {
         ) : (
           <button
             onClick={handleAddToCart}
-            className="w-full py-3 mt-4 bg-black rounded-lg text-white font-semibold cursor-pointer transition"
+            className="w-full py-3 mt-4 bg-[#0858a8] text-white rounded-lg  font-semibold cursor-pointer transition"
           >
             Add to Cart
           </button>

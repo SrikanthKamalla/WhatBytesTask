@@ -28,7 +28,7 @@ const CartPage = () => {
   const total = subtotal - discount + tax + shipping;
 
   return (
-    <div className="min-h-screen bg-[#1e1e1e] text-white p-4">
+    <div className="min-h-screen p-4">
       <h1 className="text-2xl font-bold mb-4">My Cart</h1>
 
       <div className="sm:flex flex-row gap-6">
@@ -37,7 +37,7 @@ const CartPage = () => {
             cartItems.map((item) => (
               <div
                 key={item.id}
-                className="flex items-center bg-[#2a2a2a] p-3 rounded-lg shadow"
+                className="flex items-center p-3 rounded-lg shadow bg-[#afcfee]"
               >
                 <img
                   src={item.image}
@@ -46,20 +46,18 @@ const CartPage = () => {
                 />
                 <div className="ml-3 flex-1">
                   <h2 className="font-semibold text-lg">{item.title}</h2>
-                  <p className="text-gray-400 text-sm">
-                    ${item.price.toFixed(2)}
-                  </p>
+                  <p className="text-md">${item.price.toFixed(2)}</p>
                   <div className="flex items-center gap-2 mt-2">
                     <button
                       onClick={() => handleUpdateQuantity(item.id, "dec")}
-                      className="px-2 py-1 bg-gray-600 rounded"
+                      className="px-2 py-1 rounded cursor-pointer"
                     >
                       –
                     </button>
                     <span>{item.qty}</span>
                     <button
                       onClick={() => handleUpdateQuantity(item.id, "inc")}
-                      className="px-2 py-1 bg-gray-600 rounded"
+                      className="px-2 py-1 rounded cursor-pointer"
                     >
                       +
                     </button>
@@ -67,12 +65,12 @@ const CartPage = () => {
                 </div>
 
                 <div className="flex flex-col items-end">
-                  <p className="text-[#f00f18] font-bold">
+                  <p className="font-bold">
                     ${(item.price * item.qty).toFixed(2)}
                   </p>
                   <button
                     onClick={() => handleRemoveItem(item.id)}
-                    className="mt-2 text-white text-sm"
+                    className="mt-2 text-sm cursor-pointer"
                   >
                     Remove
                   </button>
@@ -88,21 +86,21 @@ const CartPage = () => {
 
         {cartItems.length > 0 && (
           <div className="sm:w-1/2">
-            <div className="bg-[#2a2a2a] p-4 rounded-lg space-y-2">
+            <div className="p-4 rounded-lg space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-gray-300">Subtotal</span>
+                <span className="text-md">Subtotal</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-300">Discount</span>
-                <span className="text-green-400">-${discount.toFixed(2)}</span>
+                <span className="text-md">Discount</span>
+                <span className="text-[#0858a8]">-${discount.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-300">Estimated Tax (8%)</span>
+                <span className="text-sm">Estimated Tax (8%)</span>
                 <span>${tax.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-gray-300">Shipping</span>
+                <span>Shipping</span>
                 <span>
                   {shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}
                 </span>
@@ -113,7 +111,7 @@ const CartPage = () => {
                 <span>${total.toFixed(2)}</span>
               </div>
               <button
-                className="mt-4 w-full bg-[#f00f18] py-3 rounded-lg text-white font-semibold"
+                className="mt-4 w-full bg-[#0858a8] py-3 rounded-lg text-white font-semibold cursor-pointer"
                 onClick={() => dispatch(clearCart())}
               >
                 Checkout
