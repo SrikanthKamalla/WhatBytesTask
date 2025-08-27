@@ -1,8 +1,8 @@
 export default function Sidebar() {
   return (
-    <aside className="p-4 border-r border-gray-700 w-1/4 hidden md:block text-white">
+    <aside className="p-4 border-r border-gray-700 w-1/7 hidden min-w-[155px] sm:block text-white">
       <h3 className="font-semibold mb-2">Filters</h3>
-      <div className="mb-4">
+      <div className="m-4">
         <h4 className="font-medium">Category</h4>
         <div>
           <input type="checkbox" id="phones" /> <label>Phones</label>

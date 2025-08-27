@@ -5,7 +5,7 @@ export default function App() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex flex-1">
+      <main className="">
         <Home />
       </main>
       <Footer />
