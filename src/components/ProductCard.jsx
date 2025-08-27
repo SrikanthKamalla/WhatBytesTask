@@ -6,7 +6,7 @@ export default function ProductCard({ product }) {
       </div>
       <h3 className="mt-2 font-semibold text-white text-xl">{product.title}</h3>
       <p className="text-white text-lg">${product.price}</p>
-      <button className="mt-3 bg-black text-white rounded px-5 py-4">
+      <button className="w-full bg-black py-3 rounded-lg text-white font-semibold">
         Add to Cart
       </button>
     </div>

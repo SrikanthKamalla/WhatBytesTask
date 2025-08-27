@@ -1,14 +1,42 @@
 import Header from "../src/components/Header.jsx";
 import Home from "../src/pages/Home.jsx";
 import Footer from "../src/components/Footer.jsx";
+import ProductDetail from "./pages/ProductDetail.jsx";
+import realmebuds from "../src/assets/realmebuds2wired.png";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
+
 export default function App() {
   return (
-    <div className="flex flex-col min-h-screen">
-      <Header />
-      <main className="">
-        <Home />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path={"/"}
+          element={
+            <>
+              <Header />
+              <Home />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path={"/product/:id"}
+          element={
+            <>
+              <Header />
+              <ProductDetail
+                product={{
+                  title: "titel",
+                  description: "description description",
+                  price: 123,
+                  image: realmebuds,
+                }}
+              />
+              <Footer />
+            </>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
