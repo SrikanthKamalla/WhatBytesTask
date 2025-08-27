@@ -4,6 +4,7 @@ import Footer from "../src/components/Footer.jsx";
 import ProductDetail from "./pages/ProductDetail.jsx";
 import realmebuds from "../src/assets/realmebuds2wired.png";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import CartPage from "./pages/CartPage.jsx";
 
 export default function App() {
   return (
@@ -32,6 +33,16 @@ export default function App() {
                   image: realmebuds,
                 }}
               />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path={"/cart"}
+          element={
+            <>
+              <Header />
+              <CartPage />
               <Footer />
             </>
           }

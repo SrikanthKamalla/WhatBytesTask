@@ -4,7 +4,7 @@ const ProductDetail = ({ product }) => {
   return (
     <div className="w-full min-h-screen bg-[#111111] p-8 px-12 text-white ">
       <div className="product-div sm:flex sm:flex-row gap-2">
-        <div className="min-h-80 max-h-80 bg-white flex justify-center items-center">
+        <div className="min-h-80 max-h-80 bg-white flex justify-center items-center rounded md:min-h-120 md:min-w-120 md:max-h-120">
           <img
             src={product.image}
             alt={product.title}
