@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 import asianshoes from "../assets/asianshoes.png";
 import asuslaptop from "../assets/asus.png";
 import batashoes from "../assets/batashoes.png";
@@ -11,6 +11,7 @@ const items = [
     id: 1,
     title: "Asian Running Shoes",
     price: 1299,
+    qty: 1,
     image: asianshoes,
     rating: 4.2,
     category: "Footwear",
@@ -22,6 +23,7 @@ const items = [
     id: 2,
     title: "Asus Vivobook Laptop",
     price: 45999,
+    qty: 1,
     image: asuslaptop,
     rating: 4.5,
     category: "Laptops",
@@ -33,6 +35,7 @@ const items = [
     id: 3,
     title: "Bata Formal Shoes",
     price: 2499,
+    qty: 1,
     image: batashoes,
     rating: 4,
     category: "Footwear",
@@ -44,6 +47,7 @@ const items = [
     id: 4,
     title: "Realme Buds 2 Wired Earphones",
     price: 799,
+    qty: 1,
     image: realmebuds,
     rating: 4.3,
     category: "Accessories",
@@ -55,6 +59,7 @@ const items = [
     id: 5,
     title: "Vivo X200 FE Smartphone",
     price: 27999,
+    qty: 1,
     image: vivox200,
     rating: 4.4,
     category: "Smartphones",
@@ -67,6 +72,7 @@ const items = [
     title: "Redmi Note 9 Pro Max",
     price: 15999,
     image: redmenote9promax,
+    qty: 1,
     rating: 4.1,
     category: "Smartphones",
     brand: "Redmi",
@@ -74,6 +80,7 @@ const items = [
       "Redmi Note 9 Pro Max with 6.67-inch display, quad-camera setup, and 5020mAh battery for long-lasting performance.",
   },
 ];
+
 const prices = items.map((p) => p.price);
 const minPrice = Math.min(...prices);
 const maxPrice = Math.max(...prices);
@@ -96,36 +103,40 @@ const productSlice = createSlice({
       state.filter = { ...state.filter, ...action.payload };
     },
     clearFilter(state) {
+      const prices = state.products.map((p) => p.price);
+      const minPrice = Math.min(...prices);
+      const maxPrice = Math.max(...prices);
       state.filter = {
         category: [],
         brand: [],
-        priceRange: [0, 100000],
+        priceRange: [minPrice, maxPrice],
         search: "",
       };
     },
   },
 });
 
-export const selectFilteredProducts = (state) => {
-  const { products, filter } = state.products;
+export const selectFilteredProducts = createSelector(
+  (state) => state.products.products,
+  (state) => state.products.filter,
+  (products, filter) =>
+    products.filter((p) => {
+      const matchesCategory =
+        filter.category.length === 0 || filter.category.includes(p.category);
 
-  return products.filter((p) => {
-    const matchesCategory =
-      filter.category.length === 0 || filter.category.includes(p.category);
+      const matchesBrand =
+        filter.brand.length === 0 || filter.brand.includes(p.brand);
 
-    const matchesBrand =
-      filter.brand.length === 0 || filter.brand.includes(p.brand);
+      const matchesPrice =
+        p.price >= filter.priceRange[0] && p.price <= filter.priceRange[1];
 
-    const matchesPrice =
-      p.price >= filter.priceRange[0] && p.price <= filter.priceRange[1];
+      const matchesSearch = p.title
+        .toLowerCase()
+        .includes(filter.search.toLowerCase());
 
-    const matchesSearch = p.title
-      .toLowerCase()
-      .includes(filter.search.toLowerCase());
-
-    return matchesCategory && matchesBrand && matchesPrice && matchesSearch;
-  });
-};
+      return matchesCategory && matchesBrand && matchesPrice && matchesSearch;
+    })
+);
 
 export const { setFilter, clearFilter } = productSlice.actions;
 export default productSlice.reducer;

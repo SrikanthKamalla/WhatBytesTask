@@ -37,8 +37,8 @@ const cartSlice = createSlice({
       const { id, qty } = action.payload;
       const item = state.items.find((i) => i.id === id);
       if (item) {
-        item.qty = qty;
-        if (item.qty <= 0) {
+        item.qty = Math.max(0, qty);
+        if (item.qty === 0) {
           state.items = state.items.filter((i) => i.id !== id);
         }
       }
