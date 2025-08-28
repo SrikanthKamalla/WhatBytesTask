@@ -40,12 +40,12 @@ export default function Header() {
           />
         </div>
 
-        <div className="flex items-center p-3 rounded justify-end sm:static absolute top-5 right-5 bg-[#06396c]  cursor-pointer">
+        <div className="flex items-center p-2 sm:p-3 rounded justify-end sm:static absolute top-0 right-0 bg-[#06396c] cursor-pointer">
           <button
             className="relative flex cursor-pointer"
             onClick={() => navigate("/cart")}
           >
-            Cart&nbsp;
+            <span className="hidden sm:block">Cart&nbsp;</span>
             <ShoppingCart className="text-[#d5d5d5] w-6 h-6 cursor-pointer" />
           </button>
           {cartCount > 0 && (
